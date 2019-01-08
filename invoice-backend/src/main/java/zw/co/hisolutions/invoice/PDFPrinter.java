@@ -1,4 +1,4 @@
-package org.example.invoice;
+package zw.co.hisolutions.invoice;
 
 import java.awt.Color;
 import org.apache.pdfbox.pdmodel.PDPageContentStream;

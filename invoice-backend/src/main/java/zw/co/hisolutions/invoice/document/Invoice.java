@@ -1,4 +1,4 @@
-package org.example.invoice.document;
+package zw.co.hisolutions.invoice;
 
 import java.util.*;
 import org.json.simple.JSONObject;
@@ -6,7 +6,7 @@ import org.json.simple.JSONArray;
 import org.apache.pdfbox.pdmodel.PDPageContentStream;
 import org.apache.pdfbox.pdmodel.font.PDFont;
 import org.apache.pdfbox.pdmodel.font.PDType1Font;
-import org.example.invoice.PDFPrinter;
+import zw.co.hisolutions.invoice.PDFPrinter;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDPage;
 import java.awt.Color;

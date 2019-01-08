@@ -1,4 +1,4 @@
-package org.example.invoice.document;
+package zw.co.hisolutions.invoice;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -6,7 +6,7 @@ import org.json.simple.JSONObject;
 import org.apache.pdfbox.pdmodel.PDPageContentStream;
 import org.apache.pdfbox.pdmodel.font.PDFont;
 import org.apache.pdfbox.pdmodel.font.PDType1Font;
-import org.example.invoice.PDFPrinter;
+import zw.co.hisolutions.invoice.PDFPrinter;
 import java.awt.Color;
 import java.io.IOException;
 

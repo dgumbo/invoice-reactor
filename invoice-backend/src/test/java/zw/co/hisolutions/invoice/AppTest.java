@@ -1,4 +1,4 @@
-package org.example.invoice;
+package zw.co.hisolutions.invoice;
 
 import org.junit.*;
 

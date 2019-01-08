@@ -1,17 +1,13 @@
-package org.example.invoice;
+package zw.co.hisolutions.invoice;
 
 import org.json.simple.JSONValue;
 import org.json.simple.JSONObject;
 import java.io.*;
-import java.util.*;
-import org.example.invoice.document.*;
 
 import java.io.IOException;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDPage;
 import org.apache.pdfbox.pdmodel.PDPageContentStream;
-import org.apache.pdfbox.pdmodel.font.PDFont;
-import org.apache.pdfbox.pdmodel.font.PDType1Font;
 
 public class App 
 {

@@ -1,4 +1,4 @@
-package org.example.invoice.document;
+package zw.co.hisolutions.invoice;
 
 import java.util.Date;
 import java.text.SimpleDateFormat;
@@ -8,7 +8,7 @@ import org.apache.pdfbox.pdmodel.PDPageContentStream;
 import org.apache.pdfbox.pdmodel.font.PDFont;
 import org.apache.pdfbox.pdmodel.font.PDType1Font;
 import java.awt.Color;
-import org.example.invoice.PDFPrinter;
+import zw.co.hisolutions.invoice.PDFPrinter;
 import java.io.IOException;
 
 public class ShippingData {
