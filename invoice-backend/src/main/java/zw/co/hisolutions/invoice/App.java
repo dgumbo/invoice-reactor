@@ -8,6 +8,7 @@ import java.io.IOException;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDPage;
 import org.apache.pdfbox.pdmodel.PDPageContentStream;
+import zw.co.hisolutions.invoice.document.Invoice;
 
 public class App 
 {
@@ -19,12 +20,7 @@ public class App
 	    		(JSONObject)JSONValue
 	    			.parse(new FileReader(new File("afew.json")));
 
-	    	Invoice invoice = new Invoice(jsonDocument);
-
-/*
-            "first": "季",
-            "last": "睿杰"
-*/
+	    	      Invoice invoice = new Invoice(jsonDocument);
 
             PDPage pdfPage = new PDPage();
             pdfDocument.addPage(pdfPage);
@@ -32,7 +28,7 @@ public class App
 
             invoice.printPDF(pdfDocument, contents);            
 
-            pdfDocument.save("single-invoice.pdf");
+            pdfDocument.save("0101-single-invoice.pdf");
     	} catch (Exception e) {
     		e.printStackTrace();
         } finally {
