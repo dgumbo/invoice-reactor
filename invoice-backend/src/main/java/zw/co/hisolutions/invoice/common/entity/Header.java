@@ -1,7 +1,8 @@
-package zw.co.hisolutions.invoice.entity;
+package zw.co.hisolutions.invoice.common.entity;
 
 import java.util.Date;
 import java.text.SimpleDateFormat;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -17,13 +18,14 @@ public class Header extends BaseEntity{
     
     @Temporal(TemporalType.TIMESTAMP)
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    private Date invoiceDate;
+    private Date date;
     
-    private String invoiceNumber; 
+    @Column(name="_number")
+    private String number; 
     
 
     public String getInvoiceDateString() {
-        return sdf.format(this.invoiceDate);
+        return sdf.format(this.date);
     }
 
 }

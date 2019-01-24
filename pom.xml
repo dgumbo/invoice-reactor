@@ -27,6 +27,7 @@
     <modules>
         <module>invoice-backend</module>
         <module>invoice-common</module>
+        <module>invoice-frontend</module>
     </modules>
     
     <dependencyManagement>

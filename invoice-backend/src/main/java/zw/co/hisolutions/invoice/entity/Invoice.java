@@ -7,6 +7,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import lombok.Data;
 import zw.co.hisolutions.common.entity.BaseEntity; 
+import zw.co.hisolutions.invoice.common.entity.Address;
+import zw.co.hisolutions.invoice.common.entity.Header;
 
 @Data
 @Entity
@@ -24,12 +26,4 @@ public class Invoice extends BaseEntity{
     private List<InvoiceRow> rows  ;
     
     private String notes; 
-}
-
-
-//    @OneToMany(targetEntity=SellItem.class, cascade=CascadeType.ALL ) 
-    
-//    @ManyToOne(targetEntity = StockItem.class)
-    
-//    @Temporal(TemporalType.TIMESTAMP)
-//    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+} 

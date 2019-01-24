@@ -1,1 +1,8 @@
-/* You can add global styles to this file, and also import other style files */
+@import "~@angular/material/prebuilt-themes/indigo-pink.css";
+@import '~material-design-icons/iconfont/material-icons.css'; 
+@import "~bootstrap/scss/bootstrap";
+$fa-font-path: "~font-awesome/fonts" ;
+@import "~font-awesome/scss/font-awesome" ;
+@import "~animate.css/animate.min.css" ;  
+// @import "src/styles-theme.scss" ;   
+@import "~ng-pick-datetime/assets/style/picker.min.css";

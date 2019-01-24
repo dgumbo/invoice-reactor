@@ -1,11 +1,11 @@
 package zw.co.hisolutions.invoice.service.impl;
  
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Service;
-import zw.co.hisolutions.invoice.api.HeaderController;
-import zw.co.hisolutions.invoice.entity.Header;
-import zw.co.hisolutions.invoice.entity.dao.HeaderDao;
-import zw.co.hisolutions.invoice.service.HeaderService;
+import org.springframework.stereotype.Service; 
+import zw.co.hisolutions.invoice.common.api.HeaderController;
+import zw.co.hisolutions.invoice.common.entity.Header;
+import zw.co.hisolutions.invoice.common.entity.dao.HeaderDao;
+import zw.co.hisolutions.invoice.common.service.HeaderService;
 
 @Service
 public class HeaderServiceImpl implements HeaderService{ 

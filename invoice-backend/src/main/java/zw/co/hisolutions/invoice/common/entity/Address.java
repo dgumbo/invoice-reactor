@@ -1,7 +1,7 @@
-package zw.co.hisolutions.invoice.entity;
+package zw.co.hisolutions.invoice.common.entity;
  
 import javax.persistence.Entity;
-import lombok.Data;
+import lombok.Data; 
 import zw.co.hisolutions.common.entity.BaseEntity;
 
 @Data

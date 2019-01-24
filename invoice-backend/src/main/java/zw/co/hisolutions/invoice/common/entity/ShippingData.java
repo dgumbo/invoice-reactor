@@ -1,4 +1,4 @@
-package zw.co.hisolutions.invoice.entity;
+package zw.co.hisolutions.invoice.common.entity;
 
 import java.util.Date;
 import java.text.SimpleDateFormat;

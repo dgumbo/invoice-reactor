@@ -1,4 +1,4 @@
-package zw.co.hisolutions.invoice.service.impl;
+package zw.co.hisolutions.invoice.receipt.service.impl;
 
 import java.awt.Color;
 import java.io.File;
@@ -15,14 +15,12 @@ import org.apache.pdfbox.pdmodel.font.PDType1Font;
 import org.apache.pdfbox.pdmodel.graphics.image.PDImageXObject;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
-import zw.co.hisolutions.invoice.api.InvoiceController; 
 import zw.co.hisolutions.invoice.common.entity.Address;
 import zw.co.hisolutions.invoice.common.entity.Header;
 import zw.co.hisolutions.invoice.common.entity.ShippingData;
-import zw.co.hisolutions.invoice.entity.Invoice;
-import zw.co.hisolutions.invoice.entity.InvoiceRow; 
-import zw.co.hisolutions.invoice.entity.dao.InvoiceDao;
-import zw.co.hisolutions.invoice.service.InvoiceService; 
+import zw.co.hisolutions.invoice.receipt.entity.Receipt;
+import zw.co.hisolutions.invoice.receipt.entity.ReceiptRow; 
+import zw.co.hisolutions.invoice.receipt.service.ReceiptService; 
 import zw.co.hisolutions.invoice.pdfprint.service.PDFPrinterService;
 
 /**
@@ -30,12 +28,12 @@ import zw.co.hisolutions.invoice.pdfprint.service.PDFPrinterService;
  * @author dgumbo
  */
 @Service
-public class InvoiceServiceImpl implements InvoiceService {
+public class ReceiptServiceImpl implements ReceiptService {
 
-    private final InvoiceDao invoiceDao;
+    private final ReceiptDao receiptDao;
 
-    public InvoiceServiceImpl(InvoiceDao invoiceDao) {
-        this.invoiceDao = invoiceDao;
+    public ReceiptServiceImpl(ReceiptDao receiptDao) {
+        this.receiptDao = receiptDao;
     }
 
     @Override
@@ -73,17 +71,17 @@ public class InvoiceServiceImpl implements InvoiceService {
   
    
     @Override
-    public int printInvoiceRow(PDPageContentStream contents, int rowY, InvoiceRow invoiceRow) throws IOException {
+    public int printReceiptRow(PDPageContentStream contents, int rowY, ReceiptRow receiptRow) throws IOException {
         Color strokeColor = new Color(100, 100, 100);
         contents.setStrokingColor(strokeColor);
 
         PDFont font = PDType1Font.HELVETICA;
         PDFPrinterService textPrinter = new PDFPrinterService(contents, font, 8);
-        textPrinter.putText(60, rowY + 7, invoiceRow.getProduct().getNumber());
-        textPrinter.putText(160, rowY + 7, invoiceRow.getProduct().getDescription());
-        textPrinter.putTextToTheRight(420, rowY + 7, invoiceRow.getQuantityString());
-        textPrinter.putTextToTheRight(490, rowY + 7, invoiceRow.getPriceString());
-        textPrinter.putTextToTheRight(560, rowY + 7, invoiceRow.getTotalString());
+        textPrinter.putText(60, rowY + 7, receiptRow.getProduct().getNumber());
+        textPrinter.putText(160, rowY + 7, receiptRow.getProduct().getDescription());
+        textPrinter.putTextToTheRight(420, rowY + 7, receiptRow.getQuantityString());
+        textPrinter.putTextToTheRight(490, rowY + 7, receiptRow.getPriceString());
+        textPrinter.putTextToTheRight(560, rowY + 7, receiptRow.getTotalString());
 
         return rowY + 7;
     }
@@ -91,9 +89,9 @@ public class InvoiceServiceImpl implements InvoiceService {
     @Override
     public int printHeader(PDDocument pdfDocument, PDPageContentStream contents, int headerStartY, Header header) throws IOException {
         int headerStartX = 120;
-        PDFont fontAwesome = PDType0Font.load(pdfDocument, new File("./invoice-fonts/fontawesome-webfont.ttf"));
+        PDFont fontAwesome = PDType0Font.load(pdfDocument, new File("./receipt-fonts/fontawesome-webfont.ttf"));
 
-        PDImageXObject pdImage = PDImageXObject.createFromFile("./invoice-backend/logo.png", pdfDocument);
+        PDImageXObject pdImage = PDImageXObject.createFromFile("./receipt-backend/logo.png", pdfDocument);
         final float width = 60f;
         final float scale = width / pdImage.getWidth();
         contents.drawImage(pdImage, 50, headerStartY - 44, width, pdImage.getHeight() * scale);
@@ -114,11 +112,11 @@ public class InvoiceServiceImpl implements InvoiceService {
         fontAwesomePrinter.putText(headerStartX, headerStartY - 57, "\uf0ac");
 
         Color color = new Color(200, 200, 200);
-        PDFPrinterService invoiceHeaderPrinter = new PDFPrinterService(contents, font, 24, color);
-        invoiceHeaderPrinter.putText(450, headerStartY, "INVOICE");
+        PDFPrinterService receiptHeaderPrinter = new PDFPrinterService(contents, font, 24, color);
+        receiptHeaderPrinter.putText(450, headerStartY, "INVOICE");
 
-        textPrinter.putText(390, headerStartY - 20, "Invoice Date:");
-        textPrinter.putText(390, headerStartY - 32, "Invoice Number:");
+        textPrinter.putText(390, headerStartY - 20, "Receipt Date:");
+        textPrinter.putText(390, headerStartY - 32, "Receipt Number:");
         textPrinter.putText(490, headerStartY - 20, header.getInvoiceDateString());
         textPrinter.putText(490, headerStartY - 32, header.getNumber());
 
@@ -130,14 +128,14 @@ public class InvoiceServiceImpl implements InvoiceService {
     private int breakPoint = 12;
 
     @Override
-    public void printPDF(PDDocument pdfDocument, PDPageContentStream contents, Invoice invoice) throws IOException {
+    public void printPDF(PDDocument pdfDocument, PDPageContentStream contents, Receipt receipt) throws IOException {
         int nextStartY = 740;
 
-        Header header = invoice.getHeader(); 
+        Header header = receipt.getHeader(); 
         nextStartY = printHeader(pdfDocument, contents, nextStartY, header);
         
         int numPrintedRows = 0;
-        int rowsLeft = invoice.getRows().size();
+        int rowsLeft = receipt.getRows().size();
         
         nextStartY -= 30;
         printHeaderRow(contents, nextStartY);
@@ -146,11 +144,11 @@ public class InvoiceServiceImpl implements InvoiceService {
         );
 
         BigDecimal totalCost = BigDecimal.ZERO;
-        for (InvoiceRow invoiceRow : invoice.getRows()) {
+        for (ReceiptRow receiptRow : receipt.getRows()) {
             numPrintedRows++;
             nextStartY -= 20;
-            printInvoiceRow(contents, nextStartY, invoiceRow);
-            totalCost = invoiceRow.addTotal(totalCost);
+            printReceiptRow(contents, nextStartY, receiptRow);
+            totalCost = receiptRow.addTotal(totalCost);
             if (newPageRequired(numPrintedRows, rowsLeft)) {
                 rowsLeft -= numPrintedRows;
                 numPrintedRows = 0;
@@ -160,7 +158,7 @@ public class InvoiceServiceImpl implements InvoiceService {
                 nextStartY = 660;
                 contents = newPage(pdfDocument, contents, nextStartY,
                         rowsLeft < maxPageWithSummation ? maxPageWithSummation : maxRowSize,
-                        invoice
+                        receipt
                 ); 
             }
         }
@@ -176,16 +174,16 @@ public class InvoiceServiceImpl implements InvoiceService {
          */
         nextStartY = 210;
         printSummary(contents, totalCost, nextStartY);
-        printFooter(contents, nextStartY, invoice);
+        printFooter(contents, nextStartY, receipt);
         contents.close();
     }
 
-    private PDPageContentStream newPage(PDDocument pdfDocument, PDPageContentStream contents, int rowY, int numRows, Invoice invoice) throws IOException {
+    private PDPageContentStream newPage(PDDocument pdfDocument, PDPageContentStream contents, int rowY, int numRows, Receipt receipt) throws IOException {
         contents.close();
         PDPage pdfPage = new PDPage();
         pdfDocument.addPage(pdfPage);
         contents = new PDPageContentStream(pdfDocument, pdfPage);
-        Header header = invoice.getHeader();
+        Header header = receipt.getHeader();
         printHeader(pdfDocument, contents, 740, header);
         printHeaderRow(contents, rowY);
         printRowBackGround(contents, rowY - 21, numRows);
@@ -312,7 +310,7 @@ public class InvoiceServiceImpl implements InvoiceService {
         headerPrinter.putText(510, headerY + 7, "Total Price");
     }
 
-    public void printFooter(PDPageContentStream contents, Integer startY, Invoice invoice) throws IOException {
+    public void printFooter(PDPageContentStream contents, Integer startY, Receipt receipt) throws IOException {
         Color strokeColor = new Color(100, 100, 100);
         contents.setStrokingColor(strokeColor);
         contents.addRect(50, 35, 370, 135);
@@ -324,7 +322,7 @@ public class InvoiceServiceImpl implements InvoiceService {
 
         int rowY = startY - 20;
         StringBuilder sb = new StringBuilder();
-        for (String s : invoice.getNotes().split(" ")) {
+        for (String s : receipt.getNotes().split(" ")) {
             if (footerValuePrinter.widthOfText(sb.toString() + " " + s) > 365) {
                 if (rowY < 50) {
                     sb.append("...");
@@ -342,18 +340,18 @@ public class InvoiceServiceImpl implements InvoiceService {
         footerValuePrinter.putText(55, rowY, sb.toString());
     }
 
-    public List<InvoiceRow> getRows(Invoice invoice) {
-        return invoice.getRows();
+    public List<ReceiptRow> getRows(Receipt receipt) {
+        return receipt.getRows();
     }
     
     @Override
-    public JpaRepository<Invoice, Long> getDao() {
-        return invoiceDao;
+    public JpaRepository<Receipt, Long> getDao() {
+        return receiptDao;
     }
 
     @Override
     public Class getController() {
-        return InvoiceController.class;
+        return ReceiptController.class;
     }
 
 }

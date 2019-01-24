@@ -1,18 +1,17 @@
 package zw.co.hisolutions.invoice.init;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.ArrayList; 
 import java.util.Date;
 import java.util.List;
-import org.springframework.stereotype.Service;
-import zw.co.hisolutions.invoice.entity.Address;
-import zw.co.hisolutions.invoice.entity.Header;
+import org.springframework.stereotype.Service; 
+import zw.co.hisolutions.invoice.common.entity.Address;
+import zw.co.hisolutions.invoice.common.entity.Header;
+import zw.co.hisolutions.invoice.common.service.AddressService;
+import zw.co.hisolutions.invoice.common.service.HeaderService;
 import zw.co.hisolutions.invoice.entity.Invoice;
 import zw.co.hisolutions.invoice.entity.InvoiceRow;
-import zw.co.hisolutions.invoice.entity.Product;
-import zw.co.hisolutions.invoice.service.AddressService;
-import zw.co.hisolutions.invoice.service.HeaderService;
+import zw.co.hisolutions.invoice.entity.Product; 
 import zw.co.hisolutions.invoice.service.InvoiceService;
 import zw.co.hisolutions.invoice.service.ProductService;
 
@@ -65,8 +64,8 @@ public class InitTestData {
 
     private Header initHeader() {
         Header header = new Header();
-        header.setInvoiceDate(new Date());
-        header.setInvoiceNumber("FD2000103");
+        header.setDate(new Date());
+        header.setNumber("FD2000103");
         return header;
     }
 

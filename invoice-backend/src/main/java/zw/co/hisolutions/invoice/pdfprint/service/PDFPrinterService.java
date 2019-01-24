@@ -1,4 +1,4 @@
-package zw.co.hisolutions.pdfprint.service;
+package zw.co.hisolutions.invoice.pdfprint.service;
 
 import java.awt.Color;
 import org.apache.pdfbox.pdmodel.PDPageContentStream;
