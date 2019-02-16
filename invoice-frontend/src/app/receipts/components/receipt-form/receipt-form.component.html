@@ -1,37 +1,22 @@
+
 <div class="container-fluid">
-  <div class="row">
-    <div class="col-xs-12 ">
-      <nav>
-        <div class="nav nav-tabs nav-fill" id="nav-tab" role="tablist">
-          <a class="nav-item nav-link active" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab"
-            aria-controls="nav-profile" aria-selected="false">Edit</a>
-          <a class="nav-item nav-link" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home"
-            aria-selected="true">Preview</a>
-          <a class="nav-item nav-link" id="nav-contact-tab" data-toggle="tab" href="#nav-contact" role="tab"
-            aria-controls="nav-contact" aria-selected="false">Delete</a>
-          <a class="nav-item nav-link" id="nav-about-tab" data-toggle="tab" href="#download" role="tab" aria-controls="nav-about"
-            aria-selected="false">Download</a>
-        </div>
-      </nav>
-
-      <div class="tab-content py-3 px-3 px-sm-0" id="nav-tabContent">
-        <div class="tab-pane fade show active container vw-100" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
-          <app-receipt-form-edit [receiptId]="receiptId"></app-receipt-form-edit>
-        </div>
-        <div class="tab-pane fade" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
-          Preview
-        </div>
-        <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">
-          Delete
-        </div>
-        <div class="tab-pane fade" id="download" role="tabpanel" aria-labelledby="nav-about-tab">
-          Download Download Download Download Download
-          Download Download Download Download Download
-          Download Download Download Download Download
-          Download Download Download Download Download
-        </div>
-      </div>
-
-    </div>
-  </div>
+<mat-tab-group (selectedIndexChange)="setIndexValue($event)">
+    <mat-tab label="Edit"> 
+        <app-receipt-form-edit [receiptId]="receiptId"></app-receipt-form-edit>
+    </mat-tab>
+    <mat-tab label="Preview" isActive>
+        <app-receipt-form-preview  
+         [selectedTab]="selectedTabSubject">
+          </app-receipt-form-preview>          
+    </mat-tab>
+    <mat-tab label="Download"> 
+        Download Download Download Download Download
+        Download Download Download Download Download
+        Download Download Download Download Download
+        Download Download Download Download Download  </mat-tab>
+    <mat-tab label="Delete">  
+        Delete      
+    </mat-tab>
+  </mat-tab-group>
 </div>
+

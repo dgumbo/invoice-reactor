@@ -1,19 +1,19 @@
 package zw.co.hisolutions.invoice.init;
 
 import java.math.BigDecimal;
-import java.util.ArrayList; 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import org.springframework.stereotype.Service; 
+import org.springframework.stereotype.Service;
 import zw.co.hisolutions.invoice.common.entity.Address;
 import zw.co.hisolutions.invoice.common.entity.Header;
 import zw.co.hisolutions.invoice.common.service.AddressService;
 import zw.co.hisolutions.invoice.common.service.HeaderService;
-import zw.co.hisolutions.invoice.entity.Invoice;
-import zw.co.hisolutions.invoice.entity.InvoiceRow;
-import zw.co.hisolutions.invoice.entity.Product; 
-import zw.co.hisolutions.invoice.service.InvoiceService;
-import zw.co.hisolutions.invoice.service.ProductService;
+import zw.co.hisolutions.invoice.invoices.entity.Invoice;
+import zw.co.hisolutions.invoice.invoices.entity.InvoiceRow;
+import zw.co.hisolutions.invoice.invoices.entity.Product;
+import zw.co.hisolutions.invoice.invoices.service.InvoiceService;
+import zw.co.hisolutions.invoice.common.service.ProductService;
 
 /**
  *
@@ -35,30 +35,36 @@ public class InitTestData {
     }
 
     public Invoice initData() {
-        Header header = initHeader();
-        initCompanyAddress();
-        Address billingAddress = initBillingAddress();
-        String notes = initNotes();
 
-        billingAddress = addressService.save(billingAddress);
-        header = headerService.save(header);
+        Invoice invoice = null;
+        if (invoiceService.findAll().isEmpty()) {
+            Header header = initHeader();
+            initCompanyAddress();
+            Address billingAddress = initBillingAddress();
+            String notes = initNotes();
 
-        Invoice invoice = new Invoice();
-        invoice.setShipTo(billingAddress);
-        invoice.setHeader(header);
-        invoice.setNotes(notes);
+            billingAddress = addressService.save(billingAddress);
+            header = headerService.save(header);
 
-        List<Product> products = initProductListData();
+            invoice = new Invoice();
+            invoice.setBillTo(billingAddress); 
+            invoice.setShipTo(billingAddress);
+            invoice.setHeader(header);
+            invoice.setNotes(notes);
+
+            List<Product> products = initProductListData();
 //        products.forEach(prod -> prod = productService.save(prod));
 
-        List<InvoiceRow> rows = initInvoiceRowListData(products);
-        for (InvoiceRow row : rows) {
-            row.setInvoice(invoice);
+            List<InvoiceRow> rows = initInvoiceRowListData(products);
+            for (InvoiceRow row : rows) {
+                row.setInvoice(invoice);
+            }
+            invoice.setRows(rows);
+
+            invoice = invoiceService.save(invoice);
+        } else {
+            invoice = invoiceService.findAll().get(0);
         }
-        invoice.setRows(rows);
-
-        invoice = invoiceService.save(invoice);
-
         return invoice;
     }
 

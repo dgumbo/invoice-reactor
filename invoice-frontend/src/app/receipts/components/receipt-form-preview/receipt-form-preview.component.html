@@ -1,0 +1,20 @@
+<div class="container">
+  <pdf-viewer #pdfViewer
+  [src]="pdfSrc" 
+  [(page)]="page"
+  [rotation]="rotation"
+  [original-size]="originalSize"
+  [fit-to-page]="fitToPage"
+  (after-load-complete)="afterLoadComplete($event)"
+  [zoom]="zoom"
+  [show-all]="showAll"
+  [stick-to-page]="stickToPage"
+  [render-text]="renderText"
+  [external-link-target]="'blank'"
+  [autoresize]="autoresize"
+  (error)="onError($event)"
+  (on-progress)="onProgress($event)"
+  (page-rendered)="pageRendered($event)">
+
+  </pdf-viewer>
+</div> 

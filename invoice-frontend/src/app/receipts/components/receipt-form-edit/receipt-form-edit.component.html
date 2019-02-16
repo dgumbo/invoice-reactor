@@ -1,4 +1,8 @@
 <div class="container">
+  <hr />
+  <button (click)="submit()" class="btn btn-primary">Submit</button>
+  <hr />
+
   <div class="row">
     <div class="form-group col col-sm-8">
       <label for="exampleInputEmail1">From : </label>
@@ -12,17 +16,17 @@
   <div class="row">
     <div class="form-group col col-sm-8">
       <label for="exampleInputEmail1">Bill To : </label>
-      <textarea class="form-control" name="receipt.billTo" [(ngModel)]="receipt.billTo" rows="4"></textarea>
+      <textarea class="form-control" name="receipt.billTo.firstname" [(ngModel)]="receipt.billTo.firstname" rows="4"></textarea>
     </div>
     <div class="col col-sm-4 row">
       <div class="form-group col col-sm-12">
         <label for="exampleInputEmail1">Receipt Number : </label>
-        <input class="form-control" name="receipt.receiptNumber" [(ngModel)]="receipt.receiptNumber" placeholder="Receipt Number">
+        <input class="form-control" name="receipt.header.number" [(ngModel)]="receipt.header.number" placeholder="Receipt Number">
       </div>
       <div class="form-group col col-sm-12">
         <label for="exampleInputEmail1">Receipt Date : </label>
-        <input class="form-control" [owlDateTime]="dt1" [owlDateTimeTrigger]="dt1" name="receipt.receiptDate"
-          [(ngModel)]="receipt.receiptDate" placeholder="Receipt Date">
+        <input class="form-control" [owlDateTime]="dt1" [owlDateTimeTrigger]="dt1" name="receipt.header.receiptDate"
+          [(ngModel)]="receipt.header.receiptDate" placeholder="Receipt Date">
         <owl-date-time #dt1 pickerType="calendar"></owl-date-time>
       </div>
     </div>
@@ -33,12 +37,18 @@
   <div *ngFor="let receiptLine of receipt.receiptLines; let i = index" class="row ">
     <div class="form-group col col-sm-8">
       <label for="exampleInputEmail1">Description : </label>
-      <textarea class="form-control" [id]="'receiptLine' + i + 'description'" name="receiptLine.description"
-        [(ngModel)]="receiptLine.description" rows="3"></textarea>
+      <textarea class="form-control" [id]="'receiptLine' + i + 'description'" name="receiptLine.product.description"
+        [(ngModel)]="receiptLine.product.description" rows="3"></textarea>
     </div>
-    <div class="col col-sm-4 ">
-      <label for="exampleInputEmail1">Amount : </label>
-      <input class="form-control" [id]="'receiptLine' + i + 'amount'" name="receiptLine.amount" [(ngModel)]="receiptLine.amount"
+
+    <div class="form-group col col-sm-2">
+      <label for="exampleInputEmail1">Quantity : </label>
+      <input class="form-control" [id]="'receiptLine' + i + 'quantity'" name="receiptLine.quantity" [(ngModel)]="receiptLine.quantity"
+        type="number" (keyup)="recalculateTotal()" (change)="recalculateTotal()">
+    </div>
+    <div class="form-group col col-sm-2">
+      <label for="exampleInputEmail1">Price : </label>
+      <input class="form-control" [id]="'receiptLine' + i + 'price'" name="receiptLine.price" [(ngModel)]="receiptLine.price"
         type="number" (keyup)="recalculateTotal()" (change)="recalculateTotal()">
     </div>
   </div>
